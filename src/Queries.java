@@ -15,9 +15,14 @@ import java.util.logging.Logger;
  */
 public class Queries {
     
-    public Queries(String query){
+    String query;
     
-    DatabaseConnection conn = DatabaseConnection.getInstance();
+    public Queries(String query){
+    this.query = query;
+    }
+    
+    public void retrieveData(){
+        DatabaseConnection conn = DatabaseConnection.getInstance();
         try {
             conn.retrieveRecords(query);
         } catch (SQLException ex) {
@@ -25,5 +30,8 @@ public class Queries {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
+    
     }
-}
+        
+    }
+

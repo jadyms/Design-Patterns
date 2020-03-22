@@ -69,7 +69,8 @@ public class Main {
         }catch (Exception e){}
                 
         String query = "SELECT * FROM country WHERE name = '" + option + "';";
-             Queries queries = new Queries(query);
+               Queries queries = new Queries(query);
+             queries.retrieveData();
                     
                     
 		} else if (option.equals("3")) {
@@ -95,10 +96,12 @@ public class Main {
                 
         String query = "SELECT * FROM country WHERE code = '" + option + "';";
              Queries queries = new Queries(query);
+             queries.retrieveData();
                     
                     
 		} else if (option.equals("4")) {
-                    System.out.println("4");
+                   //Add new records into the database
+
 		} else if (option.equals("5")) {
                     System.out.println("5");
 		} 
