@@ -20,30 +20,53 @@ public class Main {
 
     public Main() {
         
-        System.out.println("INSERT A NUMBER OPTION");
-        System.out.println("1 - Retrieve all records");
-        System.out.println("2 - Retrieve records by country name");
-        System.out.println("3 - Retrieve records by country code");
-        System.out.println("4 - Add new records to the database");
+        Menu init = new Menu();
+        ReadInput readInput = new ReadInput();
         
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        // Reading the user input
+	String option = "";
         
-        String input = "";
+        try{
+           
+            boolean readMenuInput = false; // stop when a number from 1 to 5 is inserted
+            
+            do{
+                option = readInput.ReadInput();
+                // validating user input to not empty, only 1 character from 1 to 5
+                if (!(option.equals("")) && (option.length() == 1) && (option.matches("[1-5]+"))) {
+                    readMenuInput = true;
+                }else{
+                    System.out.println("Please choose a valid option");
+                    readMenuInput = false; // repeat until a number from 1 to 5 is inserted
+                }
+            }while (readMenuInput == false);
+        }catch (Exception e){}
+                
+                // For each option of the menu there is a method being called here
+		if (option.equals("1")) {
+		System.out.println("1");
+		} else if (option.equals("2")) {
+			System.out.println("2");
+		} else if (option.equals("3")) {
+			System.out.println("3");
+		} else if (option.equals("4")) {
+		System.out.println("4");
+		} else if (option.equals("5")) {
+		System.out.println("5");
+		} 
+	
+
         
-        try {
-            input = br.readLine();
-        } catch (Exception e) {
-            System.out.println("Insert an option");
-        }
         
-       DatabaseConnection conn = DatabaseConnection.getInstance();
-        try {
-            conn.retrieveRecords();
-        } catch (SQLException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        
+//       DatabaseConnection conn = DatabaseConnection.getInstance();
+//        try {
+//            conn.retrieveRecords();
+//        } catch (SQLException ex) {
+//            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch (ClassNotFoundException ex) {
+//            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }
 
     
