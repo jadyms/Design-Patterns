@@ -4,6 +4,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -41,26 +42,45 @@ public class DatabaseConnection {
     
     
     
-     public void retrieveRecords(String query) throws SQLException, ClassNotFoundException {  
+     public String[] retrieveRecords(String query) throws SQLException, ClassNotFoundException {  
         Connection connection = null;  
         PreparedStatement ps = null;  
-        ResultSet rs = null;  
+        ResultSet rs = null; 
+          final ArrayList data = new ArrayList<>();
+        
         
         try{
             connection = this.getDatabaseConnection();  
-           //ps = connection.prepareStatement("select * from country");  
+      
             ps = connection.prepareStatement(query);  
-                      //  ps.setString();  
+                    
+         
+            
                         rs = ps.executeQuery();  
-                        while (rs.next()) {  
+                        while (rs.next()) { 
+                            data.add(
+                                    rs.getString("code") + " " + 
+                                    rs.getString("name") + " " + 
+                                    rs.getString("continent") + " " + 
+                                    rs.getString("surfacearea")+ " " +
+                                    rs.getString("headofstate"));
+                           
+                            /*
                                   System.out.println(
                                           rs.getString("code") + " " + 
                                           rs.getString("name") + " " + 
                                           rs.getString("continent") + " " + 
                                          rs.getString("surfacearea")+ " " +
                                          rs.getString("headofstate") );      
-                                        
+                           */             
                         }  
+                        
+                      /*ArrayList to Array Conversion */
+                      //https://beginnersbook.com/2013/12/how-to-convert-arraylist-to-string-array-in-java/
+		
+                     
+                        
+                         //System.out.println(data);
                  } catch (Exception e){ 
                      System.out.println(e);
                  }
@@ -75,6 +95,18 @@ public class DatabaseConnection {
                       connection.close();  
                   }   
                 }  
+         String array[] = new String[data.size()];              
+		for(int j =0;j<data.size();j++){
+		  array[j] = (String) data.get(j);
+		}
+
+		/*Displaying Array elements*/
+		for(String k: array)
+		{
+			System.out.println(k);
+		}
+
+        return array;
       }
 
      

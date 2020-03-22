@@ -26,7 +26,7 @@ public class ReadInput {
         try {
             input = br.readLine();
         } catch (Exception e) {
-            System.out.println("Insert an option");
+            System.out.print("Insert an option: ");
         }
         return input;
     }

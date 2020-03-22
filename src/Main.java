@@ -46,9 +46,32 @@ public class Main {
 		if (option.equals("1")) { 
                     //Retrieve all records stored in the database table
                     Queries queries = new Queries("select * from country");
-                    System.out.println("1");
+                    
 		} else if (option.equals("2")) {
-                    System.out.println("2");
+                    //Retrieve records by country name
+                    System.out.print("Input country name: ");
+                  
+        try{
+           
+            boolean readMenuInput = false;
+            
+                    
+                    do{
+                option = readInput.ReadInput().toLowerCase();
+                // validating user input to not empty, only 1 character from 1 to 5
+                if (!(option.equals(""))) {
+                    readMenuInput = true;
+                }else{
+                    System.out.print("Please input a country name: ");
+                    readMenuInput = false; // repeat until a number from 1 to 5 is inserted
+                }
+            }while (readMenuInput == false);
+        }catch (Exception e){}
+                
+        String query = "SELECT * FROM country WHERE name = '" + option + "';";
+             Queries queries = new Queries(query);
+                    
+                    
 		} else if (option.equals("3")) {
                     System.out.println("3");
 		} else if (option.equals("4")) {
