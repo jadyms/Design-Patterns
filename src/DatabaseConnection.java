@@ -41,18 +41,25 @@ public class DatabaseConnection {
     
     
     
-     public void retrieveRecords() throws SQLException, ClassNotFoundException {  
+     public void retrieveRecords(String query) throws SQLException, ClassNotFoundException {  
         Connection connection = null;  
         PreparedStatement ps = null;  
         ResultSet rs = null;  
         
         try{
             connection = this.getDatabaseConnection();  
-            ps = connection.prepareStatement("select * from country");  
+           //ps = connection.prepareStatement("select * from country");  
+            ps = connection.prepareStatement(query);  
                       //  ps.setString();  
                         rs = ps.executeQuery();  
                         while (rs.next()) {  
-                                  System.out.println("id= "+rs.getString("continent"));      
+                                  System.out.println(
+                                          rs.getString("code") + " " + 
+                                          rs.getString("name") + " " + 
+                                          rs.getString("continent") + " " + 
+                                         rs.getString("surfacearea")+ " " +
+                                         rs.getString("headofstate") );      
+                                        
                         }  
                  } catch (Exception e){ 
                      System.out.println(e);

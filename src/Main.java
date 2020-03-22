@@ -43,32 +43,26 @@ public class Main {
         }catch (Exception e){}
                 
                 // For each option of the menu there is a method being called here
-		if (option.equals("1")) {
-		System.out.println("1");
+		if (option.equals("1")) { 
+                    //Retrieve all records stored in the database table
+                    Queries queries = new Queries("select * from country");
+                    System.out.println("1");
 		} else if (option.equals("2")) {
-			System.out.println("2");
+                    System.out.println("2");
 		} else if (option.equals("3")) {
-			System.out.println("3");
+                    System.out.println("3");
 		} else if (option.equals("4")) {
-		System.out.println("4");
+                    System.out.println("4");
 		} else if (option.equals("5")) {
-		System.out.println("5");
+                    System.out.println("5");
 		} 
 	
 
         
         
-//        
-//       DatabaseConnection conn = DatabaseConnection.getInstance();
-//        try {
-//            conn.retrieveRecords();
-//        } catch (SQLException ex) {
-//            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (ClassNotFoundException ex) {
-//            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        
+       
     }
-
     
        public static void main (String [] args){
         
