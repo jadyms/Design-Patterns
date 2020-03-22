@@ -31,7 +31,7 @@ public class DatabaseConnection {
         
          try {
             //Get a connection to the database
-            connection = DriverManager.getConnection("jdbc:mysql://52.50.23.197:3306/world", "cctstudent", "Pass1234!");
+            connection = DriverManager.getConnection("jdbc:mysql://52.50.23.197:3306/world?useSSL=true", "cctstudent", "Pass1234!");
          }catch (SQLException ex) {
             Logger.getLogger(DatabaseConnection.class.getName()).log(Level.SEVERE, null, ex);
          }
