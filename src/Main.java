@@ -73,7 +73,30 @@ public class Main {
                     
                     
 		} else if (option.equals("3")) {
-                    System.out.println("3");
+                    //Retrieve records by country code
+                    System.out.print("Input country code: ");
+                  
+        try{
+           
+            boolean readMenuInput = false;
+            
+                    
+                    do{
+                option = readInput.ReadInput().toLowerCase();
+               
+                if (!(option.equals(""))) {
+                    readMenuInput = true;
+                }else{
+                    System.out.print("Please input a country code: ");
+                    readMenuInput = false; // repeat until a number from 1 to 5 is inserted
+                }
+            }while (readMenuInput == false);
+        }catch (Exception e){}
+                
+        String query = "SELECT * FROM country WHERE code = '" + option + "';";
+             Queries queries = new Queries(query);
+                    
+                    
 		} else if (option.equals("4")) {
                     System.out.println("4");
 		} else if (option.equals("5")) {
