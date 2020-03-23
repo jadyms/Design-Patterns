@@ -23,6 +23,7 @@ public class Main {
         
         Menu init = new Menu();
         ReadInput readInput = new ReadInput();
+        CountryDAO dao = new MySQLCountryDAO();
         
         // Reading the user input
 	String option = "";
@@ -49,14 +50,15 @@ public class Main {
                     //Queries queries = new Queries("select * from country");
                     //queries.retrieveData();
                     
-                    CountryDAO dao = new MySQLCountryDAO();
+                    
                     ArrayList<Country> countries = dao.getCountries();
-                   
-                    System.out.println(countries.toString());
+                                      
+                    System.out.println(countries);
                     
 		} else if (option.equals("2")) {
                     //Retrieve records by country name
                     System.out.print("Input country name: ");
+                  
                   
         try{
            
@@ -83,6 +85,8 @@ public class Main {
 		} else if (option.equals("3")) {
                     //Retrieve records by country code
                     System.out.print("Input country code: ");
+                    
+                    
                   
         try{
            
@@ -101,10 +105,15 @@ public class Main {
             }while (readMenuInput == false);
         }catch (Exception e){}
                 
-        String query = "SELECT * FROM country WHERE code = '" + option + "';";
+        
+          Country country = dao.findByCode(option);
+          System.out.println(country);
+        
+          /*
+             String query = "SELECT * FROM country WHERE code = '" + option + "';";
              Queries queries = new Queries(query);
              queries.retrieveData();
-                    
+          */
                     
 		} else if (option.equals("4")) {
                    //Add new records into the database
@@ -120,12 +129,17 @@ public class Main {
                     String continent = readInput.ReadInput().toLowerCase();
                     
                     System.out.print("Input surface area: ");
-                    String surfaceArea = readInput.ReadInput().toLowerCase();
+                    double surfaceArea = Double.valueOf(readInput.ReadInput());
                     
                     System.out.print("Input head of state: ");
                     String headOfState = readInput.ReadInput().toLowerCase();
+                    
+                   Country newCountry = new Country(code, name, continent,surfaceArea , headOfState);
+                   boolean isInserted = dao.insertCountry(newCountry);
+                    System.out.println("Country inserted into the db? " + isInserted);
                  
-                    String query = "INSERT INTO country VALUES ('" + code + "', '" 
+                    /*
+                     String query = "INSERT INTO country VALUES ('" + code + "', '" 
                                                                     + name + "', '"
                                                                     + continent + "', '"
                                                                     + surfaceArea+ "', '"
@@ -133,6 +147,8 @@ public class Main {
                  
             Queries queries = new Queries(query);
              queries.insertData();
+                    */
+                   
        /*
                              try{
            

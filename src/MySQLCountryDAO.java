@@ -49,7 +49,7 @@ public class MySQLCountryDAO implements CountryDAO{
     public Country findByCode(String code) {
        
              
-             String query =  "SELECT * FROM country WHERE name = '" + code + "';";
+             String query =  "SELECT * FROM country WHERE code = '" + code + "';";
              ResultSet rs = dc.retrieveData(query);
              Country country = null;
               try {
@@ -61,6 +61,7 @@ public class MySQLCountryDAO implements CountryDAO{
                                  rs.getString("continent"),
                                  rs.getDouble("surfacearea"),
                                  rs.getString("headofstate"));
+                        dc.closeStatements();
              return country;       
              }
              return null;
@@ -77,12 +78,13 @@ public class MySQLCountryDAO implements CountryDAO{
     }
 
     @Override
-    public boolean insertCountry(Country country) {
+    public boolean insertCountry(Country country)  {
         String code = country.getCode();
         String name = country.getName();
         String continent = country.getContinent();
         double surfaceArea = country.getSurfaceArea();
         String headOfState = country.getHeadOfState(); 
+     
     
         String query = "INSERT INTO country VALUES ('" + code + "', '" 
                                                        + name + "', '"
@@ -90,8 +92,14 @@ public class MySQLCountryDAO implements CountryDAO{
                                                        + surfaceArea+ "', '"
                                                        + headOfState + "');";
         
+      
+            boolean isInserted = dc.insertData(query);
+          
+         dc.closeStatements();
+          
        
-        return dc.insertData(query);
+       
+        return isInserted;
     }
     
     

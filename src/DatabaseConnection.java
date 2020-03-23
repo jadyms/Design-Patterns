@@ -22,7 +22,7 @@ public class DatabaseConnection {
     private static String username = "cctstudent";
     private static String password = "Pass1234!";
     
-    //Conection variables
+    //Connection variables
     private static Connection connection = null;
     private PreparedStatement ps;
     private ResultSet rs;
@@ -58,7 +58,7 @@ public class DatabaseConnection {
         try {
             connection = this.getDatabaseConnection();
             ps = connection.prepareStatement(query);       
-             rs = ps.executeQuery(); 
+            rs = ps.executeQuery(); 
             
                      
         } catch (SQLException ex) {
@@ -78,6 +78,7 @@ public class DatabaseConnection {
         try {
              connection = this.getDatabaseConnection();
              ps = connection.prepareStatement(query);
+             ps.executeUpdate();
              
              return true;
         
@@ -92,10 +93,12 @@ public class DatabaseConnection {
     }  
     
     
-    public void closeStatements() throws SQLException{
+    public void closeStatements() {
+        try{
         rs.close();
         ps.close();
         connection.close();
+        }catch(Exception e){}
     }
     
 public String[] retrieveRecords(String query) throws SQLException, ClassNotFoundException {  
