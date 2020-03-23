@@ -163,17 +163,10 @@ public class Main {
 			System.out.print("-");
 		}
 		System.out.println();
-		return;
-
-                    
+		               
                     
 		} 
 	
-
-        
-        
-        
-       
     }
     
        public static void main (String [] args){
