@@ -32,6 +32,19 @@ public class Queries {
         }
     
     }
+    
+    public void insertData(){
+        DatabaseConnection conn = DatabaseConnection.getInstance();
+        try {
+            conn.insertRecords(query);
+        } catch (SQLException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+        System.out.println(query);
+    }
         
     }
 

@@ -101,6 +101,53 @@ public class Main {
                     
 		} else if (option.equals("4")) {
                    //Add new records into the database
+                   
+                    System.out.print("Input country code: ");
+                    String code = readInput.ReadInput().toLowerCase();
+                    
+                    System.out.print("Input country name: ");
+                    String name = readInput.ReadInput().toLowerCase();
+                    
+                    System.out.print("Select continent: ");
+                    System.out.println(Continent.values());
+                    String continent = readInput.ReadInput().toLowerCase();
+                    
+                    System.out.print("Input surface area: ");
+                    String surfaceArea = readInput.ReadInput().toLowerCase();
+                    
+                    System.out.print("Input head of state: ");
+                    String headOfState = readInput.ReadInput().toLowerCase();
+                 
+                    String query = "INSERT INTO country VALUES ('" + code + "', '" 
+                                                                    + name + "', '"
+                                                                    + continent + "', '"
+                                                                    + surfaceArea+ "', '"
+                                                                    + headOfState + "');";
+                 
+            Queries queries = new Queries(query);
+             queries.insertData();
+       /*
+                             try{
+           
+            boolean readMenuInput = false;
+            
+                    
+                    do{
+                option = readInput.ReadInput().toLowerCase();
+               
+                if (!(option.equals(""))) {
+                    readMenuInput = true;
+                }else{
+                    System.out.print("Please input a country code: ");
+                    readMenuInput = false; // repeat until a number from 1 to 5 is inserted
+                }
+            }while (readMenuInput == false);
+        }catch (Exception e){}
+                            */
+                
+        
+                   
+                   
 
 		} else if (option.equals("5")) {
                     System.out.println("5");

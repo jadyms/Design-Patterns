@@ -46,7 +46,7 @@ public class DatabaseConnection {
         Connection connection = null;  
         PreparedStatement ps = null;  
         ResultSet rs = null; 
-          final ArrayList data = new ArrayList<>();
+         final ArrayList data = new ArrayList<>();
         
         
         try{
@@ -109,6 +109,26 @@ public class DatabaseConnection {
         return array;
       }
 
+     
+     public void insertRecords(String query) throws ClassNotFoundException, SQLException{
+          Connection connection = null;  
+        PreparedStatement ps = null; 
+        int counter = 0;
+        
+        try{
+        connection = this.getDatabaseConnection();
+        ps = connection.prepareStatement(query);
+        counter = ps.executeUpdate();
+        }catch(Exception e){}
+        
+        finally{
+               if(ps!=null){
+                   ps.close();
+               } if(connection!=null){
+                   connection.close();
+               }
+                }
+     }
      
      //Instance created at runtime
     public static DatabaseConnection getInstance(){
