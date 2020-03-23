@@ -23,13 +23,8 @@ public class Queries {
     
     public void retrieveData(){
         DatabaseConnection conn = DatabaseConnection.getInstance();
-        try {
-            conn.retrieveRecords(query);
-        } catch (SQLException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        //conn.retrieveRecords(query);
+        conn.retrieveData(query);
     
     }
     

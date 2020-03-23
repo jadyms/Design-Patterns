@@ -3,6 +3,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -45,7 +46,13 @@ public class Main {
                 // For each option of the menu there is a method being called here
 		if (option.equals("1")) { 
                     //Retrieve all records stored in the database table
-                    Queries queries = new Queries("select * from country");
+                    //Queries queries = new Queries("select * from country");
+                    //queries.retrieveData();
+                    
+                    CountryDAO dao = new MySQLCountryDAO();
+                    ArrayList<Country> countries = dao.getCountries();
+                   
+                    System.out.println(countries.toString());
                     
 		} else if (option.equals("2")) {
                     //Retrieve records by country name

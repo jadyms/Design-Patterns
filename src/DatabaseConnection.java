@@ -17,6 +17,16 @@ public class DatabaseConnection {
     //Unique instance of the DatabaseConnection
     private static DatabaseConnection instance;
     
+    //Credentials
+    private static String db = "jdbc:mysql://52.50.23.197:3306/world?useSSL=true";
+    private static String username = "cctstudent";
+    private static String password = "Pass1234!";
+    
+    //Conection variables
+    private static Connection connection = null;
+    private PreparedStatement ps;
+    private ResultSet rs;
+    
     
     private DatabaseConnection(){
     
@@ -27,12 +37,13 @@ public class DatabaseConnection {
               
         // Loading the database driver
         Class.forName("com.mysql.jdbc.Driver");
-        
-        Connection connection = null;
+            
         
          try {
             //Get a connection to the database
-            connection = DriverManager.getConnection("jdbc:mysql://52.50.23.197:3306/world?useSSL=true", "cctstudent", "Pass1234!");
+            
+             connection = DriverManager.getConnection(db,username, password);
+           //connection = DriverManager.getConnection("jdbc:mysql://52.50.23.197:3306/world?useSSL=true", "cctstudent", "Pass1234!");
          }catch (SQLException ex) {
             Logger.getLogger(DatabaseConnection.class.getName()).log(Level.SEVERE, null, ex);
          }
@@ -40,12 +51,55 @@ public class DatabaseConnection {
         return connection;
     }    
     
+    //Retrieving data from the DB
+    public ResultSet retrieveData(String query){
+               
+        
+        try {
+            connection = this.getDatabaseConnection();
+            ps = connection.prepareStatement(query);       
+             rs = ps.executeQuery(); 
+            
+                     
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseConnection.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(DatabaseConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+   
+        return rs;
+    }
+    
+    //Insertng data into the db
+    
+    public boolean insertData(String query){
+        try {
+             connection = this.getDatabaseConnection();
+             ps = connection.prepareStatement(query);
+             
+             return true;
+        
+    } catch (SQLException ex) {
+            Logger.getLogger(DatabaseConnection.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(DatabaseConnection.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+        
+    }  
     
     
-     public String[] retrieveRecords(String query) throws SQLException, ClassNotFoundException {  
-        Connection connection = null;  
-        PreparedStatement ps = null;  
-        ResultSet rs = null; 
+    public void closeStatements() throws SQLException{
+        rs.close();
+        ps.close();
+        connection.close();
+    }
+    
+public String[] retrieveRecords(String query) throws SQLException, ClassNotFoundException {  
+          
          final ArrayList data = new ArrayList<>();
         
         
