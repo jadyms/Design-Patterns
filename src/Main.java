@@ -150,7 +150,23 @@ public class Main {
                    
 
 		} else if (option.equals("5")) {
-                    System.out.println("5");
+                    //Logout
+                    String message = "THANK YOU. GOODBYE";
+		int n = message.length();
+
+		for (int i = 0; i < n + 4; i++) {
+			System.out.print("-");
+		}
+		System.out.println();
+		System.out.println("* " + message + " *");
+		for (int i = 0; i < n + 4; i++) {
+			System.out.print("-");
+		}
+		System.out.println();
+		return;
+
+                    
+                    
 		} 
 	
 
