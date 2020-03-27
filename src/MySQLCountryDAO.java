@@ -57,17 +57,22 @@ public class MySQLCountryDAO implements CountryDAO{
              
              String query =  "SELECT * FROM country WHERE code = '" + code + "';";
              ResultSet rs = dc.retrieveData(query);
-             Country country = null;
+             //Country country = null;
+             Country.CountryBuilder builder;
               try {
              if (rs.next()) {
+                 //   String code = code;
+                    String name = rs.getString("name");
+                    String headOfState = rs.getString("headofstate");
+                    String continent = rs.getString("continent");
+                    double surfaceArea = Double.valueOf(rs.getString("surfaceArea"));
                 
-                       country = new Country(
-                         rs.getString("code"),
-                                 rs.getString("name"),
-                                 rs.getString("continent"),
-                                 rs.getDouble("surfacearea"),
-                                 rs.getString("headofstate"));
+                      //creation of the Builder Object
+                       builder = new Country.CountryBuilder(code,name ,headOfState).setContinent(continent).setSurfaceArea(surfaceArea);
+                 
+                      
                         dc.closeStatements();
+                        Country country = builder.build();
              return country;       
              }
              return null;
@@ -88,18 +93,22 @@ public class MySQLCountryDAO implements CountryDAO{
              
              String query =  "SELECT * FROM country WHERE name = '" + name + "';";
              ResultSet rs = dc.retrieveData(query);
-             Country country = null;
+              Country.CountryBuilder builder;
              
              try {
                   
              while (rs.next()) {
+                  String code = rs.getString("code");
+                   String headOfState = rs.getString("headofstate");
+                    String continent = rs.getString("continent");
+                    double surfaceArea = Double.valueOf(rs.getString("surfaceArea"));
+                                  
+
+                    //creation of the Builder Object
+                       builder = new Country.CountryBuilder(code,name ,headOfState).setContinent(continent).setSurfaceArea(surfaceArea);
+                  
+                        Country country = builder.build();
                 
-                       country = new Country(
-                         rs.getString("code"),
-                                 rs.getString("name"),
-                                 rs.getString("continent"),
-                                 rs.getDouble("surfacearea"),
-                                 rs.getString("headofstate"));
                  countries.add(country);
              }
              dc.closeStatements();
@@ -114,6 +123,8 @@ public class MySQLCountryDAO implements CountryDAO{
 
     @Override
     public boolean insertCountry(Country country)  {
+        
+        
         String code = country.getCode();
         String name = country.getName();
         String continent = country.getContinent();
