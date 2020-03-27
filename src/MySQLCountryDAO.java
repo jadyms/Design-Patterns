@@ -15,26 +15,25 @@ public class MySQLCountryDAO implements CountryDAO{
     
     @Override
     public ArrayList<Country> getCountries() {
+        // public ArrayList<Country> getCountries() {
         
-        
-             ArrayList <Country> countries = new ArrayList<Country>();
-             
+             ArrayList <Country> countries = new ArrayList<>();
+            // ArrayList <Country> countries = new ArrayList<Country>();
              String query = "SELECT * FROM country;";
               
              ResultSet rs = dc.retrieveData(query);
-             Country country = null;
              
+             Country.CountryBuilder builder;
+           
+            // Country.CountryBuilder country = null;
              try {
                   
              while (rs.next()) {
                 
-                       country = new Country(
-                         rs.getString("code"),
-                                 rs.getString("name"),
-                                 rs.getString("continent"),
-                                 rs.getDouble("surfacearea"),
-                                 rs.getString("headofstate"));
-                 countries.add(country);
+                       builder = new Country.CountryBuilder(rs.getString("code"), rs.getString("name"), rs.getString("headofstate")).setContinent(rs.getString("continent")).setSurfaceArea(Double.valueOf(rs.getString("surfaceArea")));
+                 
+                        Country country = builder.build();
+                       countries.add(country);
              }
              dc.closeStatements();
           
@@ -73,8 +72,37 @@ public class MySQLCountryDAO implements CountryDAO{
     }
 
     @Override
-    public Country findByName(String name) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public ArrayList<Country> findByName(String name) {
+        //Name is not a primary key in the db
+        //It is possible that users have inserted several inputs with the same name
+        //That is the reason why an ArrayList is returned
+        
+         ArrayList <Country> countries = new ArrayList<Country>();
+             
+             String query =  "SELECT * FROM country WHERE name = '" + name + "';";
+             ResultSet rs = dc.retrieveData(query);
+             Country country = null;
+             
+             try {
+                  
+             while (rs.next()) {
+                
+                       country = new Country(
+                         rs.getString("code"),
+                                 rs.getString("name"),
+                                 rs.getString("continent"),
+                                 rs.getDouble("surfacearea"),
+                                 rs.getString("headofstate"));
+                 countries.add(country);
+             }
+             dc.closeStatements();
+          
+         } catch (SQLException ex) {
+             Logger.getLogger(MySQLCountryDAO.class.getName()).log(Level.SEVERE, null, ex);
+         }
+          
+              return countries;
+       
     }
 
     @Override

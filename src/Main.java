@@ -4,26 +4,23 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 /**
  *
  * @author JadyMartins
  */
 public class Main {
+            CountryDAO dao = new MySQLCountryDAO();
+      
 
     public Main() {
         
         Menu init = new Menu();
         ReadInput readInput = new ReadInput();
-        CountryDAO dao = new MySQLCountryDAO();
+
         
         // Reading the user input
 	String option = "";
@@ -53,7 +50,9 @@ public class Main {
                     
                     ArrayList<Country> countries = dao.getCountries();
                                       
-                    System.out.println(countries);
+                    for(Country c: countries){
+                    System.out.println(c);
+                    }
                     
 		} else if (option.equals("2")) {
                     //Retrieve records by country name
@@ -77,9 +76,14 @@ public class Main {
             }while (readMenuInput == false);
         }catch (Exception e){}
                 
-        String query = "SELECT * FROM country WHERE name = '" + option + "';";
+        /*
+           String query = "SELECT * FROM country WHERE name = '" + option + "';";
                Queries queries = new Queries(query);
              queries.retrieveData();
+        */
+     
+             ArrayList<Country> countries = dao.findByName(option);
+          System.out.println(countries);
                     
                     
 		} else if (option.equals("3")) {
@@ -125,7 +129,7 @@ public class Main {
                     String name = readInput.ReadInput().toLowerCase();
                     
                     System.out.print("Select continent: ");
-                    System.out.println(Continent.values());
+                    System.out.println(Arrays.asList(Continent.values()));
                     String continent = readInput.ReadInput().toLowerCase();
                     
                     System.out.print("Input surface area: ");
@@ -141,8 +145,7 @@ public class Main {
                     /*
                      String query = "INSERT INTO country VALUES ('" + code + "', '" 
                                                                     + name + "', '"
-                                                                    + continent + "', '"
-                                                                    + surfaceArea+ "', '"
+                                                                    + continent + "'ct                                                                + surfaceArea+ "', '"
                                                                     + headOfState + "');";
                  
             Queries queries = new Queries(query);

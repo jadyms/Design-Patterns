@@ -11,7 +11,16 @@ public class Country {
     private double surfaceArea;
     private String headOfState; 
     
-    public Country(String code, String name, String continent, double surfaceArea, String headOfState){
+    private Country(CountryBuilder builder){
+        this.code = builder.code;
+        this.name = builder.name;
+        this.continent = builder.continent;
+        this.surfaceArea = builder.surfaceArea;
+        this.headOfState = builder.headOfState;
+    }
+    
+    /*
+     public Country(String code, String name, String continent, double surfaceArea, String headOfState){
         //Assigning variables
         this.code = code;
         this.name = name;
@@ -19,6 +28,43 @@ public class Country {
         this.surfaceArea = surfaceArea;
         this.headOfState = headOfState;
     }
+    */
+   
+    
+    public static class CountryBuilder{
+         //Declaring variables
+    private String code;
+    private String name;
+    private String continent;
+    private double surfaceArea;
+    private String headOfState; 
+    
+    public CountryBuilder (String code, String name, String headOfState){
+    this.code = code;
+    this.name = name;
+    this.headOfState = headOfState;
+    this.surfaceArea = 1000;
+    this.continent = Continent.ASIA.toString();
+        
+    }
+  
+    public CountryBuilder setSurfaceArea(double surfaceArea){
+        this.surfaceArea = surfaceArea;
+        return this;
+    }
+    
+    public CountryBuilder setContinent(String continent){
+        this.continent = continent;
+        return this;
+    }
+    
+    public Country build(){
+        return new Country(this);
+    }
+    
+    }
+    
+    
     
     //Getters and Setters
     public String getCode(){
@@ -63,7 +109,10 @@ public class Country {
 
     @Override
     public String toString() {
-        return "Country{" + "code=" + code + ", name=" + name + ", continent=" + continent + ", surfaceArea=" + surfaceArea + ", headOfState=" + headOfState + '}';
+       return  code + ", "
+                      + name + ", "
+                        + continent + ", " + surfaceArea 
+                          + ", " + headOfState ;
     }
     
     
