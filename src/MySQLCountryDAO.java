@@ -27,13 +27,20 @@ public class MySQLCountryDAO implements CountryDAO{
            
             // Country.CountryBuilder country = null;
              try {
-                  
-             while (rs.next()) {
-                
-                       builder = new Country.CountryBuilder(rs.getString("code"), rs.getString("name"), rs.getString("headofstate")).setContinent(rs.getString("continent")).setSurfaceArea(Double.valueOf(rs.getString("surfaceArea")));
+                while (rs.next()) {
+                    String code = rs.getString("code");
+                    String name = rs.getString("name");
+                    String headOfState = rs.getString("headofstate");
+                    String continent = rs.getString("continent");
+                    double surfaceArea = Double.valueOf(rs.getString("surfaceArea"));
+                                  
+
+                    //creation of the Builder Object
+                       builder = new Country.CountryBuilder(code,name ,headOfState).setContinent(continent).setSurfaceArea(surfaceArea);
                  
-                        Country country = builder.build();
-                       countries.add(country);
+                       //Creation of the Country Object through Builder
+                    Country country = builder.build();
+                    countries.add(country);
              }
              dc.closeStatements();
           
