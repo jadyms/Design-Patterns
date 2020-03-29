@@ -8,7 +8,7 @@ import java.util.Arrays;
 public class Main {
             CountryDAO dao = new MySQLCountryDAO();
             Menu init = new Menu();
-            ReadInput readInput = new ReadInput();
+            Input input = new Input();
             
 
     public Main() throws IOException {
@@ -19,7 +19,7 @@ public class Main {
             //Print menu of options
              init.printMenu();
              //Read user input 
-             option = readInput.ReadInput();
+             option = input.ReadInput();
                          
              if (option.matches("1")) {
                 //Retrieve all records stored in the database table
@@ -33,12 +33,17 @@ public class Main {
              
              } else if (option.equals("2")) {
                 //Retrieve records by country name
-                                 
-                do{
+                String message = "Input country name: ";
+                 option = input.getInput(message);
+                /*
+                  do{
                     System.out.print("Input country name: ");
                     
-                }while( (option = readInput.ReadInput()).matches(""));
+                }while( (option = Input.Input()).matches(""));
 
+                 
+                 */                 
+               
                 ArrayList<Country> countries = dao.findByName(option);
                 if(countries.isEmpty()){
                     System.out.println(option + " not found in the database");
@@ -53,11 +58,17 @@ public class Main {
              }else if (option.equals("3")) {
                 //Retrieve records by country name
                                  
-                do{
+                String message = "Please input a country code: ";
+                
+                /*
+                   do{
                     System.out.print("Please input a country code: ");
                     
-                }while( (option = readInput.ReadInput()).matches(""));
+                }while( (option = Input.Input()).matches(""));
                 
+                */
+                
+                option = input.getInput(message);
                 
                 
                 Country country = dao.findByCode(option);
@@ -75,26 +86,24 @@ public class Main {
            
              }else if (option.equals("4")) {
                    //Add new records into the database
-                   
-                    System.out.print("Input country code: ");
-                    String code = readInput.ReadInput().toLowerCase();
-                    
-                    System.out.print("Input country name: ");
-                    String name = readInput.ReadInput().toLowerCase();
+                    String code = input.getValidCode("Input country code: ");
+                 
+                    String name = input.getValidName("Input country name: ");
                     
                     System.out.print("Select continent: ");
                     System.out.println(Arrays.asList(Continent.values()));
-                    String continent = readInput.ReadInput().toLowerCase();
+                    String continent = input.ReadInput();
                     
-                    System.out.print("Input surface area: ");
-                    double surfaceArea = Double.valueOf(readInput.ReadInput());
+               
+                    String surfaceAreaString = input.getValidSurfaceArea("Input surface area: ");
+                    double surfaceArea = Double.valueOf(surfaceAreaString);
                     
-                    System.out.print("Input head of state: ");
-                    String headOfState = readInput.ReadInput().toLowerCase();
+                    String headOfState = input.getValidHeadOfState("Input head of state: ");            
+                   
                     
                    Country newCountry = new Country.CountryBuilder(code, name, headOfState).setContinent(continent).setSurfaceArea(surfaceArea).build();
                    boolean isInserted = dao.insertCountry(newCountry);
-                    System.out.println("Country inserted into the db? " + isInserted);
+                   System.out.println("Country inserted into the db? " + isInserted);
                  
                                     
                    
@@ -107,12 +116,15 @@ public class Main {
               
             
         }while(!(option.equals("")) || !(option.length() == 1) || !(option.matches("[1-5]+")));
+       // }while(!(option.equals("")) || !(option.length() == 1) || !(option.matches("[1-5]+")));
   
         
     
         
 
     }
+    
+   
     
     public  void messyMenu() throws IOException{
             init.printWelcome();
@@ -131,7 +143,7 @@ public class Main {
                  init.printMenu();
         
         
-                option = readInput.ReadInput();
+                option = input.ReadInput();
                 // validating user input to not empty, only 1 character from 1 to 5
                 if (!(option.equals("")) && (option.length() == 1) && (option.matches("[1-5]+"))) {
                     readMenuInput = true;
@@ -168,7 +180,7 @@ public class Main {
             
                     
                     do{
-                option = readInput.ReadInput().toLowerCase();
+                option = input.ReadInput().toLowerCase();
                 // validating user input to not empty, only 1 character from 1 to 5
                 if (!(option.equals(""))) {
                     readMenuInput = true;
@@ -206,7 +218,7 @@ public class Main {
             
                     
                     do{
-                option = readInput.ReadInput().toLowerCase();
+                option = input.ReadInput().toLowerCase();
                
                 if (!(option.equals(""))) {
                     readMenuInput = true;
@@ -231,20 +243,20 @@ public class Main {
                    //Add new records into the database
                    
                     System.out.print("Input country code: ");
-                    String code = readInput.ReadInput().toLowerCase();
+                    String code = input.ReadInput().toLowerCase();
                     
                     System.out.print("Input country name: ");
-                    String name = readInput.ReadInput().toLowerCase();
+                    String name = input.ReadInput().toLowerCase();
                     
                     System.out.print("Select continent: ");
                     System.out.println(Arrays.asList(Continent.values()));
-                    String continent = readInput.ReadInput().toLowerCase();
+                    String continent = input.ReadInput().toLowerCase();
                     
                     System.out.print("Input surface area: ");
-                    double surfaceArea = Double.valueOf(readInput.ReadInput());
+                    double surfaceArea = Double.valueOf(input.ReadInput());
                     
                     System.out.print("Input head of state: ");
-                    String headOfState = readInput.ReadInput().toLowerCase();
+                    String headOfState = input.ReadInput().toLowerCase();
                     
                    Country newCountry = new Country.CountryBuilder(code, name, headOfState).setContinent(continent).setSurfaceArea(surfaceArea).build();
                    boolean isInserted = dao.insertCountry(newCountry);
@@ -267,7 +279,7 @@ public class Main {
             
                     
                     do{
-                option = readInput.ReadInput().toLowerCase();
+                option = Input.Input().toLowerCase();
                
                 if (!(option.equals(""))) {
                     readMenuInput = true;
