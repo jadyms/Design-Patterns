@@ -61,14 +61,6 @@ public class Main {
                                  
                 String message = "Please input a country code: ";
                 
-                /*
-                   do{
-                    System.out.print("Please input a country code: ");
-                    
-                }while( (option = Input.Input()).matches(""));
-                
-                */
-                
                 option = input.getInput(message);
                 
                 
@@ -91,13 +83,10 @@ public class Main {
                  
                     String name = input.getValidName("Input country name: ");
                     
-                    for(Continent c : Continent.values())
-        {
-            System.out.println(c.getValue());
-        }
-                    String continent = input.getValidContinent("Input continent from the options \n "
+                    
+                    String continent = input.getValidContinent("Input a continent from the options: \n" + Continent.getContinents()
                                                        );
-                              
+                             
                
                     String surfaceAreaString = input.getValidSurfaceArea("Input surface area: ");
                     double surfaceArea = Double.valueOf(surfaceAreaString);

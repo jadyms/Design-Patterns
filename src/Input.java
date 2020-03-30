@@ -1,6 +1,7 @@
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -112,7 +113,9 @@ public class Input {
      public String getValidContinent(String message){
          
           do{
+             
              option = getInput(message);
+             
              
         } 
          
