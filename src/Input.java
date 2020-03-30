@@ -98,6 +98,64 @@ public class Input {
         return option;
         
     }
+
+     public boolean isEnum(String option){
+         
+          for (Continent b : Continent.values()) {
+            if (b.value.equalsIgnoreCase(option)) 
+          
+         return true;
+            }
+            return false;
+     
+     }  
+     public String getValidContinent(String message){
+         
+          do{
+             option = getInput(message);
+             
+        } 
+         
+        
+        while (!option.matches("[a-zA-Z][a-zA-Z ]+"));
+          
+           /*
+           for (Continent b : Continent.values()) {
+            if (b.value.equalsIgnoreCase(option)) {
+                option = b.getValue();
+          */
+          if(isEnum(option)){
+              return option;
+             
+            }else{
+                String answer = getInput("Continent not recognized. Use default ASIA? Y or N");
+                option = answer;
+            } if(option.equalsIgnoreCase("y")){
+                    option = Continent.ASIA.toString();
+                    System.out.println("Using default continent " + option);
+                }else{
+                  
+                 option = getValidContinent(message);
+             }
+            /*
+            else  {
+                String answer = getInput("Continent not recognized. Use default ASIA? Y or N");
+                option = answer;
+                   
+                  if(option.equalsIgnoreCase("y")){
+                    option = Continent.ASIA.toString();
+                    System.out.println("Default asia " + option);
+                }else{
+                  
+                 option = getValidContinent(message);
+             }
+             */
+            
+
+   
     
-    
-    }
+           
+          return option;
+           
+           }
+}
