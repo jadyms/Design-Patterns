@@ -2,15 +2,18 @@
  *
  * @author JadyMartins
  */
+
+//Treating country as an object
 public class Country {
     
-    //Declaring variables
+    //Declaring variables of Country
     private String code;
     private String name;
     private String continent;
     private double surfaceArea;
     private String headOfState; 
     
+    //Using Builder Pattern to create a Country
     private Country(CountryBuilder builder){
         this.code = builder.code;
         this.name = builder.name;
@@ -18,21 +21,9 @@ public class Country {
         this.surfaceArea = builder.surfaceArea;
         this.headOfState = builder.headOfState;
     }
-    
-    /*
-     public Country(String code, String name, String continent, double surfaceArea, String headOfState){
-        //Assigning variables
-        this.code = code;
-        this.name = name;
-        this.continent = continent;
-        this.surfaceArea = surfaceArea;
-        this.headOfState = headOfState;
-    }
-    */
-   
-    
-    public static class CountryBuilder{
-         //Declaring variables
+
+    public static class CountryBuilder{;
+    //Declaring variables for countryBuilder innerclass
     private String code;
     private String name;
     private String continent;
@@ -43,11 +34,11 @@ public class Country {
     this.code = code;
     this.name = name;
     this.headOfState = headOfState;
-    this.surfaceArea = 1000;
-    this.continent = Continent.ASIA.toString();
-        
+    this.surfaceArea = 0; //Default Value
+    this.continent = Continent.ASIA.toString(); //Default Value
     }
   
+    //Set optional values if default not used
     public CountryBuilder setSurfaceArea(double surfaceArea){
         this.surfaceArea = surfaceArea;
         return this;
@@ -58,6 +49,7 @@ public class Country {
         return this;
     }
     
+    //Create a country
     public Country build(){
         return new Country(this);
     }

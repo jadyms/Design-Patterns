@@ -1,23 +1,15 @@
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.Arrays;
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  *
  * @author JadyMartins
  */
-public class Input {
-      public static String input;
-      public boolean isEmpty;
-      private String option = null;
-      
+public class Input{
+    public static String input;
+    public boolean isEmpty;
+    private String option = null;
+    private static final String ALPHA_NUMERIC_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";      
+    
     public String ReadInput(){
         
       
@@ -45,12 +37,30 @@ public class Input {
         return option;
     }
     
+    
+    
     public boolean isEmpty(String input){
-        if(input.matches(""));
+        if(input.matches("")){
         return true;
+        }return false;
     }
     
-    public boolean isValidCode(String code){
+   public boolean isAlphabetic(String input){
+         if(input.matches("[a-zA-Z][a-zA-Z ]+")){
+       return true;
+         }
+         return false;
+   } 
+
+public boolean isDouble(String input){
+     if(input.matches("^[+-]?([0-9]*[.])?[0-9]+$")){
+       return true;
+     }
+         return false;
+     
+}   
+   
+   /*public boolean isValidCode(String code){
         
         if(!code.matches("^[a-zA-Z0-9]*$") || (code.length()>3)){
             return false;
@@ -58,16 +68,42 @@ public class Input {
       
         return true;
     }
-    
+    */
+    public boolean isValidSurface(String surfaceArea){
+        
+        double surfaceAreaDouble = Double.valueOf(surfaceArea);
+        if((surfaceAreaDouble) >= 0){
+        return true;
+        }
+        
+        return false;
+    }
+        
     public String getValidSurfaceArea(String message){
          do{
              option = getInput(message);
         } 
-        
-        while (!option.matches("^[+-]?([0-9]*[.])?[0-9]+$"));
+      
+          while (isDouble(option)==false);
+         
+         if(isValidSurface(option)){
+              return option;
+             
+            }else{
+                String answer = getInput("Surface Area incompatible. Use default 0.00? Y or N \n");
+                option = answer;
+            } if(option.equalsIgnoreCase("y")){
+                    option = "0.00";
+                    System.out.println("Using default surface area " + option);
+                }else{
+                  
+                 option = getValidSurfaceArea(message);
+             }
+            
+         
         return option;
     }
-    
+    /*
     public String getValidCode(String message){
  
         do{
@@ -77,40 +113,49 @@ public class Input {
         while (isValidCode(option)==false);
         return option;
     }
-    
-    public String getValidName(String message){
+    */
+    public String getAlphabeticName(String message){
          do{
              option = getInput(message);
         } 
          
-        while (!option.matches("[a-zA-Z][a-zA-Z ]+"));
+        while (isAlphabetic(option) == false);
          
         return option;
         
     }
     
-     public String getValidHeadOfState(String message){
-         do{
-             option = getInput(message);
-        } 
-         
-        while (!option.matches("[a-zA-Z][a-zA-Z ]+"));
-         
-        return option;
-        
-    }
+     
+     
+
+public static String randomCode(int count) {
+StringBuilder builder = new StringBuilder();
+while (count-- != 0) {
+int character = (int)(Math.random()*ALPHA_NUMERIC_STRING.length());
+builder.append(ALPHA_NUMERIC_STRING.charAt(character));
+}
+
+
+return builder.toString();
+}
 
      public boolean isEnum(String option){
          
           for (Continent b : Continent.values()) {
-            if (b.value.equalsIgnoreCase(option)) 
+            if (b.getValue().equalsIgnoreCase(option)) 
           
          return true;
             }
             return false;
      
      }  
-     public String getValidContinent(String message){
+   
+      
+
+
+
+
+public String getValidContinent(String message){
          
           do{
              
@@ -120,44 +165,23 @@ public class Input {
         } 
          
         
-        while (!option.matches("[a-zA-Z][a-zA-Z ]+"));
-          
-           /*
-           for (Continent b : Continent.values()) {
-            if (b.value.equalsIgnoreCase(option)) {
-                option = b.getValue();
-          */
+        while (isAlphabetic(option) == false);
+          // while (!option.matches("[a-zA-Z][a-zA-Z ]+"));
+      
           if(isEnum(option)){
               return option;
              
             }else{
-                String answer = getInput("Continent not recognized. Use default ASIA? Y or N");
+                String answer = getInput("Continent not recognized. Use default ASIA? Y or N \n");
                 option = answer;
             } if(option.equalsIgnoreCase("y")){
-                    option = Continent.ASIA.toString();
+                    option = Continent.ASIA.getValue();
                     System.out.println("Using default continent " + option);
                 }else{
                   
                  option = getValidContinent(message);
              }
-            /*
-            else  {
-                String answer = getInput("Continent not recognized. Use default ASIA? Y or N");
-                option = answer;
-                   
-                  if(option.equalsIgnoreCase("y")){
-                    option = Continent.ASIA.toString();
-                    System.out.println("Default asia " + option);
-                }else{
-                  
-                 option = getValidContinent(message);
-             }
-             */
             
-
-   
-    
-           
           return option;
            
            }
