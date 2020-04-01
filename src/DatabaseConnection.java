@@ -1,4 +1,3 @@
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -16,6 +15,16 @@ public class DatabaseConnection {
     //Unique instance of the DatabaseConnection
     private static DatabaseConnection instance;
     
+    //Credentials
+    private static String db = "jdbc:mysql://52.50.23.197:3306/world?useSSL=true";
+    private static String username = "cctstudent";
+    private static String password = "Pass1234!";
+    
+    //Connection variables
+    private static Connection connection = null;
+    private PreparedStatement ps;
+    private ResultSet rs;
+    
     
     private DatabaseConnection(){
     
@@ -26,61 +35,54 @@ public class DatabaseConnection {
               
         // Loading the database driver
         Class.forName("com.mysql.jdbc.Driver");
-        
-        Connection connection = null;
+            
         
          try {
             //Get a connection to the database
-            connection = DriverManager.getConnection("jdbc:mysql://52.50.23.197:3306/world?useSSL=true", "cctstudent", "Pass1234!");
-         }catch (SQLException ex) {
+             connection = DriverManager.getConnection(db,username, password);
+           }catch (SQLException ex) {
             Logger.getLogger(DatabaseConnection.class.getName()).log(Level.SEVERE, null, ex);
          }
          
         return connection;
     }    
     
+    //Retrieving data from the DB
+    public ResultSet retrieveData(String query){
+        try {
+            connection = this.getDatabaseConnection(); //unique instance
+            ps = connection.prepareStatement(query);       
+            rs = ps.executeQuery(); 
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(DatabaseConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return rs;
+    }
     
-    
-     public void retrieveRecords(String query) throws SQLException, ClassNotFoundException {  
-        Connection connection = null;  
-        PreparedStatement ps = null;  
-        ResultSet rs = null;  
-        
+    //Inserting data into the db
+    public boolean insertData (String query){
         try{
-            connection = this.getDatabaseConnection();  
-           //ps = connection.prepareStatement("select * from country");  
-            ps = connection.prepareStatement(query);  
-                      //  ps.setString();  
-                        rs = ps.executeQuery();  
-                        while (rs.next()) {  
-                                  System.out.println(
-                                          rs.getString("code") + " " + 
-                                          rs.getString("name") + " " + 
-                                          rs.getString("continent") + " " + 
-                                         rs.getString("surfacearea")+ " " +
-                                         rs.getString("headofstate") );      
-                                        
-                        }  
-                 } catch (Exception e){ 
-                     System.out.println(e);
-                 }
-        
-        
-          finally{  
-                    if(rs!=null){  
-                        rs.close();  
-                    }if (ps!=null){  
-                      ps.close();  
-                  }if(connection!=null){  
-                      connection.close();  
-                  }   
-                }  
-      }
-
+            connection = this.getDatabaseConnection();
+            ps = connection.prepareStatement(query);
+            ps.executeUpdate();
+            return true;
+        }catch (SQLException | ClassNotFoundException ex){
+            System.out.println("An Error Has Occurred: " + ex);
+            return false;
+        }
+    }  
+    
+    public void closeStatements() {
+        //Closing the connections
+        try{
+            rs.close();
+            ps.close();
+            connection.close();
+        }catch(Exception e){}
+    }
      
      //Instance created at runtime
-    public static DatabaseConnection getInstance(){
-        
+    public static DatabaseConnection getInstance(){        
         if (instance == null){  
             instance = new DatabaseConnection();  
         }  
